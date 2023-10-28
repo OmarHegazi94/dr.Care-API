@@ -34,7 +34,7 @@ server.use(body_parser.json());
 
 
 server.use(cors({
-    origin: 'http://localhost:4200',
+    origin: ['http://localhost:4200','https://drcare-319b6.web.app/'],
     optionsSuccessStatus: 200
 }));
 

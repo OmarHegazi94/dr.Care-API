@@ -1,62 +1,62 @@
-let express=require("express"),
-    mongoose=require("mongoose"),
-    path=require("path"),
-    body_parser=require("body-parser"),
-    clinicSupervisorRouter=require("./Routes/clinicSupervisorRouter"),
-    authRouter=require("./Routes/authRouter"),
-    doctorRouter=require("./Routes/doctorRouter"),
-    adminRouter=require("./Routes/adminRouter"),
-    patientRouter=require("./Routes/patientRouter")
-    createError = require('http-errors'),
-    cors=require("cors")
+let express = require("express"),
+    mongoose = require("mongoose"),
+    path = require("path"),
+    body_parser = require("body-parser"),
+    clinicSupervisorRouter = require("./Routes/clinicSupervisorRouter"),
+    authRouter = require("./Routes/authRouter"),
+    doctorRouter = require("./Routes/doctorRouter"),
+    adminRouter = require("./Routes/adminRouter"),
+    patientRouter = require("./Routes/patientRouter")
+createError = require('http-errors'),
+    cors = require("cors")
 
 
 
 
 
-    //open server
-    let server=express();
+//open server
+let server = express();
 
 
-    //connect To Database
-    mongoose.connect("mongodb+srv://drCare123:drCare123@drcare-h8opg.mongodb.net/test?retryWrites=true&w=majority",{useUnifiedTopology:true,useNewUrlParser:true})
-    .then(()=>{
+//connect To Database
+mongoose.connect("mongodb+srv://drCare123:drCare123@drcare-h8opg.mongodb.net/test?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true })
+    .then(() => {
         console.log("Connected To DB Successfully")
     })
-    .catch((error)=>{
+    .catch((error) => {
         console.log(error);
     });
 
 
 
-    server.use(body_parser.urlencoded({extended:false}));
-    server.use(body_parser.json());
+server.use(body_parser.urlencoded({ extended: false }));
+server.use(body_parser.json());
 
 
-    server.use(cors({
-        origin:'http://localhost:4200',
-        optionsSuccessStatus:200
-    }));
-
-
-
-
-
-    server.use(/\//,(request,response)=>{
-        response.send("Home Page")
-    });
+server.use(cors({
+    origin: 'http://localhost:4200',
+    optionsSuccessStatus: 200
+}));
 
 
 
-    server.use(authRouter);
 
-    server.use("/admin",adminRouter);
 
-    server.use("/supervisor",clinicSupervisorRouter);
+server.use(/\//, (request, response) => {
+    response.send("Home Page")
+});
 
-    server.use("/doctor",doctorRouter);
 
-    server.use(patientRouter);
+
+server.use(authRouter);
+
+server.use("/admin", adminRouter);
+
+server.use("/supervisor", clinicSupervisorRouter);
+
+server.use("/doctor", doctorRouter);
+
+server.use(patientRouter);
 
 
 
@@ -88,7 +88,7 @@ let express=require("express"),
 
 
 // port
-let port=process.env.port||1996;
-server.listen(port,()=>{
-    console.log("Listening on port"+port);
+let port = process.env.port || 1996;
+server.listen(port, () => {
+    console.log("Listening on port" + port);
 });
